@@ -5,7 +5,7 @@ import torch.nn.functional as F
 
 class VGG_D(nn.Module):
 
-    def __init__(self):
+    def __init__(self, num_classes = 10):
         super(VGG_D, self).__init__()
 
         self.conv1_1 = nn.Conv2d(in_channels = 3, out_channels = 64, kernel_size = 3, padding=1)
@@ -31,9 +31,11 @@ class VGG_D(nn.Module):
         self.conv5_3 = nn.Conv2d(in_channels = 512, out_channels = 512, kernel_size = 3, padding=1)
         self.pool5 = nn.MaxPool2d(kernel_size = 2, stride = 2)
 
-        self.fc1 = nn.Linear(32768, 4096)
+        self.fc1 = nn.Linear(25088, 4096)
         self.fc2 = nn.Linear(4096, 4096)
-        self.fc3 = nn.Linear(4096, 1000)
+        self.fc3 = nn.Linear(4096, num_classes)
+
+        self.dropout = nn.Dropout(0.5)
 
     def forward(self, x):
 
@@ -56,7 +58,9 @@ class VGG_D(nn.Module):
         x = F.relu(self.conv5_3(x))
         x = self.pool5(x)
         x = F.relu(self.fc1(torch.flatten(x, 1)))
+        x = self.dropout(x)
         x = F.relu(self.fc2(x))
-        x = F.softmax(F.relu(self.fc3(x)), dim=1)
+        x = self.dropout(x)
+        x = F.relu(self.fc3(x))
 
         return x
