@@ -1,33 +1,35 @@
-# PyTorch implementation of [Very Deep Convolutional Networks For Large-Scale Image Recognition](https://arxiv.org/pdf/1409.1556.pdf)
+## Introduction
+A PyTorch implementation of [Very Deep Convolutional Networks For Large-Scale Image Recognition](https://arxiv.org/pdf/1409.1556.pdf)
 
-# Architecture
+## Installation
 
-## VGG-A
-<p align="center">
-<img src="assets/vgg_A.onnx.svg">
-</p>
+```
+conda create -n vgg python=3.8
+conda activate vgg
+pip install -r requirements.txt
+```
 
-## VGG-A-LRN
-<p align="center">
-<img src="assets/vgg_A_LRN.onnx.svg">
-</p>
+## Architectures
+- VGG-A
+- VGG-A-LRN
+- VGG-B
+- VGG-C
+- VGG-D
+- VGG-E
 
-## VGG-B
-<p align="center">
-<img src="assets/vgg_B.onnx.svg">
-</p>
+## Dataset
+- [CIFAR10](https://pytorch.org/vision/stable/generated/torchvision.datasets.CIFAR10.html)
 
-## VGG-C
-<p align="center">
-<img src="assets/vgg_C.onnx.svg">
-</p>
+## Training
+```
+python train.py --model vgg_A --dataset cifar10
+```
 
-## VGG-D
-<p align="center">
-<img src="assets/vgg_D.onnx.svg">
-</p>
-
-## VGG-E
-<p align="center">
-<img src="assets/vgg_E.onnx.svg">
-</p>
+## Eval
+```
+python eval.py --weights WEIGHTS_FILEPATH
+```
+## Inference
+```
+python infer.py --weights WEIGHTS_FILEPATH --image IMAGE_FILEPATH
+```

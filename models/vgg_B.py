@@ -3,15 +3,17 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-class VGG_A(nn.Module):
+class VGG_B(nn.Module):
 
-    def __init__(self):
-        super(VGG_A, self).__init__()
+    def __init__(self, num_classes = 10):
+        super(VGG_B, self).__init__()
 
         self.conv1_1 = nn.Conv2d(in_channels = 3, out_channels = 64, kernel_size = 3, padding=1)
+        self.conv1_2 = nn.Conv2d(in_channels = 64, out_channels = 64, kernel_size = 3, padding=1)
         self.pool1 = nn.MaxPool2d(kernel_size = 2, stride = 2)
 
         self.conv2_1 = nn.Conv2d(in_channels = 64, out_channels = 128, kernel_size = 3, padding=1)
+        self.conv2_2 = nn.Conv2d(in_channels = 128, out_channels = 128, kernel_size = 3, padding=1)
         self.pool2 = nn.MaxPool2d(kernel_size = 2, stride = 2)
 
         self.conv3_1 = nn.Conv2d(in_channels = 128, out_channels = 256, kernel_size = 3, padding=1)
@@ -28,13 +30,15 @@ class VGG_A(nn.Module):
 
         self.fc1 = nn.Linear(32768, 4096)
         self.fc2 = nn.Linear(4096, 4096)
-        self.fc3 = nn.Linear(4096, 1000)
+        self.fc3 = nn.Linear(4096, num_classes)
 
     def forward(self, x):
 
         x = F.relu(self.conv1_1(x))
+        x = F.relu(self.conv1_2(x))
         x = self.pool1(x)
         x = F.relu(self.conv2_1(x))
+        x = F.relu(self.conv2_2(x))
         x = self.pool2(x)
         x = F.relu(self.conv3_1(x))
         x = F.relu(self.conv3_2(x))
