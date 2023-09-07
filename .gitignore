@@ -7,7 +7,7 @@ wandb/
 exports/
 .hypothesis/
 assets/
-tests/
+unittests/
 
 draft.ipynb
 __pycache__
