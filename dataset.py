@@ -9,14 +9,14 @@ def load_dataset(dataset = 'cifar10', batch_size = 16):
     if dataset == 'cifar10':
 
         train_transform = transforms.Compose([transforms.ToTensor(),
-            transforms.RandomResizedCrop(256, (0.08, 1), (3 / 4, 4 / 3)),
-            transforms.RandomCrop(256),
+            transforms.RandomResizedCrop(224, (0.08, 1), (3 / 4, 4 / 3)),
+            transforms.RandomCrop(224),
             transforms.ColorJitter(),
             transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
         ])
 
         val_transform = transforms.Compose([transforms.ToTensor(),
-            transforms.Resize(256),
+            transforms.Resize(224),
             transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
             
         ])

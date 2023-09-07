@@ -18,21 +18,21 @@ networks = {
 }
 
 
-def _xavier_init(conv: nn.Module):
+def _kaiming_init(conv: nn.Module):
     for layer in conv.modules():
         if isinstance(layer, nn.Conv2d):
-            torch.nn.init.xavier_uniform_(layer.weight)
+            torch.nn.init.kaiming_uniform_(layer.weight)
             if layer.bias is not None:
                 torch.nn.init.constant_(layer.bias, 0.0)
 
 
 class VGG(nn.Module):
-
+    
     def __init__(self, classes = 10, network = 'vgg_A'):
         super(VGG, self).__init__()
         model = networks[network]
         self.network = model(classes)
-        _xavier_init(self.network)
+        _kaiming_init(self.network)
 
 
     def forward(self, x):

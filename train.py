@@ -7,10 +7,10 @@ from dataset import load_dataset
 
 
 WANDB_LOG = True
-BATCH_SIZE = 224
+BATCH_SIZE = 64
 EPOCHS = 74
 CLASSES = 10
-LEARNING_RATE = 10e-2
+LEARNING_RATE = 10e-4
 MOMENTUM = 0.9
 WEIGHT_DECAY = 5 * 10e-4
 NETWORK = "vgg_A"
@@ -84,7 +84,7 @@ for epoch in range(EPOCHS):
             val_accuracy = (num_matches.item() / labels.numel()) * 100.0
             val_rolling_accuracy += val_accuracy
             val_rolling_loss += loss.item()
-            print(f'Epoch: {epoch + 1} / {EPOCHS}, Iter: {(i + 1)} / {len(valloader)}] Loss: {loss.item():.3f} Accuracy: {val_accuracy:.2f}')
+            print(f'Epoch: {epoch + 1} / {EPOCHS}, Iter: {(i + 1)} / {len(valloader)} Loss: {loss.item():.3f} Accuracy: {val_accuracy:.2f}')
         val_average_accuracy = val_rolling_accuracy / len(valloader)
         val_average_loss = val_rolling_loss / len(valloader)
         print(f'Epoch: {epoch + 1} Avg. Loss: {val_average_loss:.2f} Avg. Accuracy: {val_average_accuracy:.2f}')
