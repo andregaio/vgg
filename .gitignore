@@ -6,6 +6,8 @@ backup/
 wandb/
 exports/
 .hypothesis/
+assets/
+tests/
 
 draft.ipynb
 __pycache__
