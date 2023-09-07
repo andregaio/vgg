@@ -1,8 +1,8 @@
 import unittest
 import torch
-from src.model import VGG
-from src.model import Networks
-from src.utils import export_onnx, count_parameters
+from model import VGG
+from model import Networks
+from utils import export_onnx, count_parameters
 
 
 BATCH = 1

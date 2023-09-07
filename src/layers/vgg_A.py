@@ -47,6 +47,6 @@ class VGG_A(nn.Module):
         x = self.pool5(x)
         x = F.relu(self.fc1(torch.flatten(x, 1)))
         x = F.relu(self.fc2(x))
-        x = F.softmax(F.relu(self.fc3(x)), dim=1)
+        x = F.relu(self.fc3(x))
 
         return x

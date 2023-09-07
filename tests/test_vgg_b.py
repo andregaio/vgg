@@ -1,7 +1,7 @@
 import unittest
 import torch
-from src.layers.vgg_B import VGG_B
-from src.utils import export_onnx, count_parameters
+from layers.vgg_B import VGG_B
+from utils import export_onnx, count_parameters
 
 
 BATCH = 1

@@ -2,11 +2,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from enum import Enum
-from src.layers.vgg_A import VGG_A
-from src.layers.vgg_A_LRN import VGG_A_LRN
-from src.layers.vgg_B import VGG_B
-from src.layers.vgg_C import VGG_C
-from src.layers.vgg_D import VGG_D
+from layers.vgg_A import VGG_A
+from layers.vgg_A_LRN import VGG_A_LRN
+from layers.vgg_B import VGG_B
+from layers.vgg_C import VGG_C
+from layers.vgg_D import VGG_D
 
 
 class Networks(Enum):
