@@ -32,7 +32,7 @@ def train(args):
 
     optimizer = optim.SGD(model.parameters(), lr=args.learning_rate, momentum=args.momentum, weight_decay = args.weight_decay)
 
-    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[25, 45, 60], gamma=0.1)
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[18, 36, 53], gamma=0.1)
 
     for epoch in range(args.epochs):
         train_rolling_accuracy = train_rolling_loss = 0
@@ -88,7 +88,7 @@ if __name__ == "__main__":
     parser.add_argument("--dataset", type = str, default = 'cifar10')
     parser.add_argument("--batch", type = int, default = 64)
     parser.add_argument("--epochs", type = int, default = 74)
-    parser.add_argument("--learning_rate", type = float, default = 2 * 10e-4)
+    parser.add_argument("--learning_rate", type = float, default = 10e-4)
     parser.add_argument("--weight_decay", type = float, default = 5 * 10e-4)
     parser.add_argument("--momentum", type = str, default = 0.9)
     parser.add_argument("--wandb", action="store_true", default = False)
