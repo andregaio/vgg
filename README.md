@@ -27,8 +27,9 @@ python train.py --model vgg_A --dataset cifar10
 
 ## Eval
 ```
-python eval.py --weights WEIGHTS_FILEPATH
+python eval.py --weights WEIGHTS_FILEPATH --dataset cifar10
 ```
+
 ## Inference
 ```
 python infer.py --weights WEIGHTS_FILEPATH --image IMAGE_FILEPATH

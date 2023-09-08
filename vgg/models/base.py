@@ -1,7 +1,5 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-from enum import Enum
 from models.vgg_A import VGG_A
 from models.vgg_A_LRN import VGG_A_LRN
 from models.vgg_B import VGG_B

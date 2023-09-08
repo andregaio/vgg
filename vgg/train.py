@@ -13,21 +13,21 @@ CLASSES = 10
 LEARNING_RATE = 10e-4
 MOMENTUM = 0.9
 WEIGHT_DECAY = 5 * 10e-4
-NETWORK = "vgg_A"
-DATASET = "cifar10"
+NETWORK = 'vgg_A'
+DATASET = 'cifar10'
 
 
 if WANDB_LOG:
     run = wandb.init(
-        project="vgg",            
+        project='vgg',            
         config={
-            "learning_rate": LEARNING_RATE,
-            "network": NETWORK,
-            "dataset": DATASET,
-            "epochs": EPOCHS,
-            "loss" : 'sgd',
-            "batch_size" : BATCH_SIZE,
-            "momentum" : MOMENTUM,
+            'learning_rate': LEARNING_RATE,
+            'network': NETWORK,
+            'dataset': DATASET,
+            'epochs': EPOCHS,
+            'loss' : 'sgd',
+            'batch_size' : BATCH_SIZE,
+            'momentum' : MOMENTUM,
         })
 
 
@@ -91,10 +91,10 @@ for epoch in range(EPOCHS):
 
 
     if WANDB_LOG:
-        wandb.log({"train_average_accuracy": train_average_accuracy,
-                    "val_average_accuracy": val_average_accuracy,
-                    "train_average_loss": train_average_loss,
-                    "val_average_loss": val_average_loss,
+        wandb.log({'train_average_accuracy': train_average_accuracy,
+                    'val_average_accuracy': val_average_accuracy,
+                    'train_average_loss': train_average_loss,
+                    'val_average_loss': val_average_loss,
                 })
 
 
