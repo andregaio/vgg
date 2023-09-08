@@ -5,14 +5,14 @@ A PyTorch implementation of [Very Deep Convolutional Networks For Large-Scale Im
 
 
 ### Installation
-
 ```
+git clone https://github.com/andregaio/vgg.git
+cd vgg
 conda create -n vgg python=3.8
 conda activate vgg
 pip install -r requirements.txt
 ```
-
-### Architectures
+### Models
 - VGG-A
 - VGG-A-LRN
 - VGG-B

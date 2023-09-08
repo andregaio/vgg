@@ -9,7 +9,7 @@ class VGG_A_LRN(nn.Module):
         super(VGG_A_LRN, self).__init__()
 
         self.conv1_1 = nn.Conv2d(in_channels = 3, out_channels = 64, kernel_size = 3, padding=1)
-        self. lrn = torch.nn.LocalResponseNorm(size=5, alpha=0.0001, beta=0.75, k=1)
+        self.lrn = torch.nn.LocalResponseNorm(size=5, alpha=0.0001, beta=0.75, k=1)
         self.pool1 = nn.MaxPool2d(kernel_size = 2, stride = 2)
 
         self.conv2_1 = nn.Conv2d(in_channels = 64, out_channels = 128, kernel_size = 3, padding=1)
@@ -35,7 +35,8 @@ class VGG_A_LRN(nn.Module):
 
     def forward(self, x):
 
-        x = F.relu(self. lrn(self.conv1_1(x)))
+        x = F.relu(self.lrn(self.conv1_1(x)))
+        x = self.bn
         x = self.pool1(x)
         x = F.relu(self.conv2_1(x))
         x = self.pool2(x)
