@@ -5,6 +5,7 @@ from models.vgg_A_LRN import VGG_A_LRN
 from models.vgg_B import VGG_B
 from models.vgg_C import VGG_C
 from models.vgg_D import VGG_D
+import torch.nn.functional as F
 
 
 networks = {
@@ -25,11 +26,11 @@ def _kaiming_init(conv: nn.Module):
 
 
 class VGG(nn.Module):
-    
-    def __init__(self, classes = 10, network = 'vgg_A'):
+    def __init__(self, classes, network = 'vgg_A'):
         super(VGG, self).__init__()
+        self.classes = classes
         model = networks[network]
-        self.network = model(classes)
+        self.network = model(len(classes))
         _kaiming_init(self.network)
 
 

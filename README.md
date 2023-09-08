@@ -1,3 +1,6 @@
+# vgg
+<img src="assets/logo.png">
+
 ## Introduction
 A PyTorch implementation of [Very Deep Convolutional Networks For Large-Scale Image Recognition](https://arxiv.org/pdf/1409.1556.pdf)
 
@@ -27,10 +30,10 @@ python train.py --model vgg_A --dataset cifar10
 
 ## Eval
 ```
-python eval.py --weights WEIGHTS_FILEPATH --dataset cifar10
+python eval.py --model vgg_A --weights weights/checkpoint_00070.pt --dataset cifar10
 ```
 
 ## Inference
 ```
-python infer.py --weights WEIGHTS_FILEPATH --image IMAGE_FILEPATH
+python infer.py --model vgg_A --weights weights/checkpoint_00070.pt --image assets/cat.png
 ```
