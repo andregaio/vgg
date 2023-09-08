@@ -1,8 +1,8 @@
 # vgg
+A PyTorch implementation of [Very Deep Convolutional Networks For Large-Scale Image Recognition](https://arxiv.org/pdf/1409.1556.pdf)
+
 <img src="assets/logo.png">
 
-### Introduction
-A PyTorch implementation of [Very Deep Convolutional Networks For Large-Scale Image Recognition](https://arxiv.org/pdf/1409.1556.pdf)
 
 ### Installation
 
