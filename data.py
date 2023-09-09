@@ -5,7 +5,7 @@ import torchvision.transforms as transforms
 
 TRAIN_TRANSFORMS = transforms.Compose([
     transforms.ToTensor(),
-    transforms.RandomResizedCrop(32, (0.08, 1), (1, 1), antialias=True),
+    transforms.RandomCrop(32, 4),
     transforms.RandomHorizontalFlip(),
     transforms.ColorJitter(),
     transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
@@ -13,7 +13,6 @@ TRAIN_TRANSFORMS = transforms.Compose([
 
 VAL_TRANSFORMS = transforms.Compose([
     transforms.ToTensor(),
-    transforms.Resize(32, antialias=True),
     transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
 ])
 

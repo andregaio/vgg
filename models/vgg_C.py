@@ -44,9 +44,9 @@ class VGG_C(nn.Module):
         self.bn5_3 = nn.BatchNorm2d(512)
         self.pool5 = nn.MaxPool2d(kernel_size = 2, stride = 2)
 
-        self.fc1 = nn.Linear(2048, 4096)
-        self.fc2 = nn.Linear(4096, 4096)
-        self.fc3 = nn.Linear(4096, num_classes)
+        self.fc1 = nn.Linear(2048, 2048)
+        self.fc2 = nn.Linear(2048, 2048)
+        self.fc3 = nn.Linear(2048, num_classes)
 
         self.dropout = nn.Dropout(0.5)
 

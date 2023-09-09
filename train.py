@@ -32,7 +32,7 @@ def train(args):
 
     optimizer = optim.SGD(model.parameters(), lr=args.learning_rate, momentum=args.momentum, weight_decay = args.weight_decay)
 
-    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[18, 36, 53], gamma=0.1)
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones = [args.epochs // 4, args.epochs // 4 * 2, args.epochs // 4 * 3], gamma=0.1)
 
     for epoch in range(args.epochs):
         train_rolling_accuracy = train_rolling_loss = 0
@@ -74,11 +74,31 @@ def train(args):
                         'val_average_loss': val_average_loss,
                     })
 
-        if not (epoch + 1) % 10:
-            weights_filepath = f'weights/checkpoint_{args.dataset}_{args.model}_' + str(epoch + 1).zfill(5) + '.pt'
-            torch.save(model.state_dict(), weights_filepath)
+        weights_filepath = f'weights/checkpoint_{args.dataset}_{args.model}_' + str(epoch + 1).zfill(5) + '.pt'
+        torch.save(model.state_dict(), weights_filepath)
 
         scheduler.step()
+
+        weights_filepath = f'weights/checkpoint_{args.dataset}_{args.model}_' + str(epoch + 1).zfill(5) + '.pt'
+        torch.save(model.state_dict(), weights_filepath)
+
+
+def sweep(args):
+    sweep_config = {
+       'method': 'bayes',
+       'metric': {
+         'name': 'val_average_accuracy',
+         'goal': 'maximize'  
+       },
+       'parameters': {
+           'learning_rate': {'max': 0.1, 'min': 10e-5},
+           'weight_decay': {'max': 0.1, 'min': 10e-5},
+           'momentum': {'max': 0.1, 'min': 1},
+       }
+   }
+    
+    # sweep_id = wandb.sweep(sweep_config)
+    # wandb.agent(sweep_id, function=train)
 
 
 if __name__ == "__main__":
@@ -86,7 +106,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser("Argument parser")
     parser.add_argument("--model", type = str, default = 'vgg_A')
     parser.add_argument("--dataset", type = str, default = 'cifar10')
-    parser.add_argument("--batch", type = int, default = 64)
+    parser.add_argument("--batch", type = int, default = 128)
     parser.add_argument("--epochs", type = int, default = 74)
     parser.add_argument("--learning_rate", type = float, default = 10e-4)
     parser.add_argument("--weight_decay", type = float, default = 5 * 10e-4)
@@ -95,3 +115,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     train(args)
+
+    # if not args.sweep:
+    #     train(args)
+    # else:
+    #     sweep(args)
