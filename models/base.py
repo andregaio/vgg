@@ -5,6 +5,7 @@ from models.vgg_A_LRN import VGG_A_LRN
 from models.vgg_B import VGG_B
 from models.vgg_C import VGG_C
 from models.vgg_D import VGG_D
+from models.vgg_E import VGG_E
 import torch.nn.functional as F
 
 
@@ -13,7 +14,8 @@ networks = {
     'vgg_A_LRN' : VGG_A_LRN,
     'vgg_B' : VGG_B,
     'vgg_C' : VGG_C,
-    'vgg_D' : VGG_D
+    'vgg_D' : VGG_D,
+    'vgg_E' : VGG_E
 }
 
 

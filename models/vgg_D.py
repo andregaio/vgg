@@ -11,8 +11,8 @@ class VGG_D(nn.Module):
         self.conv1_1 = nn.Conv2d(in_channels = 3, out_channels = 64, kernel_size = 3, padding=1)
         self.bn1_1 = nn.BatchNorm2d(64)
         self.conv1_2 = nn.Conv2d(in_channels = 64, out_channels = 64, kernel_size = 3, padding=1)
-        self.pool1 = nn.MaxPool2d(kernel_size = 2, stride = 2)
         self.bn1_2 = nn.BatchNorm2d(64)
+        self.pool1 = nn.MaxPool2d(kernel_size = 2, stride = 2)
 
         self.conv2_1 = nn.Conv2d(in_channels = 64, out_channels = 128, kernel_size = 3, padding=1)
         self.bn2_1 = nn.BatchNorm2d(128)
@@ -44,7 +44,7 @@ class VGG_D(nn.Module):
         self.bn5_3 = nn.BatchNorm2d(512)
         self.pool5 = nn.MaxPool2d(kernel_size = 2, stride = 2)
 
-        self.fc1 = nn.Linear(25088, 4096)
+        self.fc1 = nn.Linear(512, 4096)
         self.fc2 = nn.Linear(4096, 4096)
         self.fc3 = nn.Linear(4096, num_classes)
 
@@ -56,7 +56,7 @@ class VGG_D(nn.Module):
         x = F.relu(self.bn1_2(self.conv1_2(x)))
         x = self.pool1(x)
         x = F.relu(self.bn2_1(self.conv2_1(x)))
-        x = F.relu(self.bn2_2(self.conv2_1(x)))
+        x = F.relu(self.bn2_2(self.conv2_2(x)))
         x = self.pool2(x)
         x = F.relu(self.bn3_1(self.conv3_1(x)))
         x = F.relu(self.bn3_2(self.conv3_2(x)))
