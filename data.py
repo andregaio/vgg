@@ -7,7 +7,7 @@ TRAIN_TRANSFORMS = transforms.Compose([
     transforms.ToTensor(),
     transforms.RandomResizedCrop(224, (0.08, 1), (1, 1), antialias=True),
     transforms.RandomHorizontalFlip(),
-    transforms.ColorJitter(brightness=0.5, contrast=1, saturation=0.1, hue=0.5),
+    transforms.ColorJitter(),
     transforms.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
 ])
 
