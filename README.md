@@ -47,3 +47,4 @@ This implementation is not designed to be a complete replica of the original pap
  - **Hyperparamters** have been modified (i.e., learning rate)
  - **Accuracy** has been used to evaluate classification performance
  - Has been trained on **CIFAR10**
+ - Input resolution has been changed to **32x32** match dataset
