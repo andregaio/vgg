@@ -3,7 +3,7 @@ A PyTorch implementation of [Very Deep Convolutional Networks For Large-Scale Im
 
 <img src="assets/logo.png">
 
-
+ 
 ### Installation
 ```
 git clone https://github.com/andregaio/vgg.git
@@ -37,3 +37,13 @@ python eval.py --model vgg_A --weights weights/checkpoint_00070.pt --dataset cif
 ```
 python infer.py --model vgg_A --weights weights/checkpoint_00070.pt --image assets/cat.png
 ```
+
+### Results
+
+
+### Notes
+This implementation is not designed to be a complete replica of the original paper - the main differences are:
+ - **Batchnorm** layers have been added prior to each activation
+ - **Hyperparamters** have been modified (i.e., learning rate)
+ - **Accuracy** has been used to evaluate classification performance
+ - Has been trained on **CIFAR10**
