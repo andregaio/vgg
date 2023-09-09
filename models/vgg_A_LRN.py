@@ -36,7 +36,6 @@ class VGG_A_LRN(nn.Module):
     def forward(self, x):
 
         x = F.relu(self.lrn(self.conv1_1(x)))
-        x = self.bn
         x = self.pool1(x)
         x = F.relu(self.conv2_1(x))
         x = self.pool2(x)
