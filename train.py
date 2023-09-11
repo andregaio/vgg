@@ -89,23 +89,6 @@ def train(args):
                         'max_val_accuracy': max_val_accuracy,
                     })
 
-def sweep(args):
-    sweep_config = {
-       'method': 'bayes',
-       'metric': {
-         'name': 'val_average_accuracy',
-         'goal': 'maximize'  
-       },
-       'parameters': {
-           'learning_rate': {'max': 0.1, 'min': 1e-4},
-           'weight_decay': {'max': 0.1, 'min': 1e-4},
-           'momentum': {'max': 0.1, 'min': 1},
-       }
-   }
-    
-    # sweep_id = wandb.sweep(sweep_config)
-    # wandb.agent(sweep_id, function=train)
-
 
 if __name__ == "__main__":
 
@@ -121,8 +104,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     train(args)
-
-    # if not args.sweep:
-    #     train(args)
-    # else:
-    #     sweep(args)

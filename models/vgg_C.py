@@ -5,7 +5,7 @@ import torch.nn.functional as F
 
 class VGG_C(nn.Module):
 
-    def __init__(self, num_classes = 10, dropout = 0.3):
+    def __init__(self, num_classes = 10, dropout = 0.5):
         super(VGG_C, self).__init__()
 
         self.conv1_1 = nn.Conv2d(in_channels = 3, out_channels = 64, kernel_size = 3, padding=1)
