@@ -5,7 +5,7 @@ import torch.nn.functional as F
 
 class VGG_A(nn.Module):
 
-    def __init__(self, num_classes = 10):
+    def __init__(self, num_classes = 10, dropout = 0.3):
         super(VGG_A, self).__init__()
 
         self.conv1_1 = nn.Conv2d(in_channels = 3, out_channels = 64, kernel_size = 3, padding=1)
@@ -38,7 +38,7 @@ class VGG_A(nn.Module):
         self.fc2 = nn.Linear(512, 512)
         self.fc3 = nn.Linear(512, num_classes)
 
-        self.dropout = nn.Dropout(0.3)
+        self.dropout = nn.Dropout(dropout)
 
     def forward(self, x):
 
