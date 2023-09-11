@@ -13,12 +13,14 @@ conda activate vgg
 pip install -r requirements.txt
 ```
 ### Models
-- VGG-A
-- VGG-A-LRN
-- VGG-B
-- VGG-C
-- VGG-D
-- VGG-E
+| Name       |   Accuracy  |
+| :---------- |   :------:  |
+| VGG-A       |   90.368    |
+| VGG-A-LRN   |   90.813    |
+| VGG-B       |   91.604    |
+| VGG-C       |   91.822    |
+| VGG-D       |   92.247    |
+| VGG-E       |   91.901    |
 
 ### Dataset
 - [CIFAR10](https://pytorch.org/vision/stable/generated/torchvision.datasets.CIFAR10.html)
@@ -41,15 +43,6 @@ python infer.py --model vgg_A --weights weights/checkpoint_00070.pt --image asse
 ### [Results](https://wandb.ai/andregaio/vgg)
 <div align="center">
 
-
-| Model       |   Accuracy  |
-| :---------- |   :------:  |
-| VGG-A       |   90.368    |
-| VGG-A-LRN   |   90.813    |
-| VGG-B       |   91.604    |
-| VGG-C       |   91.822    |
-| VGG-D       |   92.247    |
-| VGG-E       |   91.901    |
 
 <img src="assets/chart.png">
 
