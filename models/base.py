@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import math
 from models.vgg_A import VGG_A
 from models.vgg_A_LRN import VGG_A_LRN
 from models.vgg_B import VGG_B
@@ -19,7 +20,7 @@ networks = {
 }
 
 
-def _kaiming_init(conv: nn.Module):
+def _kaiming_init(conv):
     for layer in conv.modules():
         if isinstance(layer, nn.Conv2d):
             torch.nn.init.kaiming_uniform_(layer.weight)

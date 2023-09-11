@@ -42,9 +42,14 @@ python infer.py --model vgg_A --weights weights/checkpoint_00070.pt --image asse
 
 
 ### Notes
-This implementation is not designed to be a complete replica of the original paper - the main differences are:
+This implementation is not designed to be a complete replica of the original - the main differences are:
  - **Batchnorm** layers have been added prior to each activation
  - **Hyperparamters** have been modified (i.e., learning rate)
  - **Accuracy** has been used to evaluate classification performance
  - Has been trained on **CIFAR10**
- - Input resolution has been changed to **32x32** match dataset
+ - Input resolution and FC layer sizes have been changed to **32x32** match dataset
+ - **Automatic Mixed Precision (AMP)** training with gradient scaling and autocasting
+ - **Kaiming** initialisation
+ - **RGB colour shift** has not been used
+ - **Dropout** set to 0.3
+ - **Learning rate** dropped 2 times during training process

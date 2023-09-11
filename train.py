@@ -32,18 +32,22 @@ def train(args):
 
     optimizer = optim.SGD(model.parameters(), lr=args.learning_rate, momentum=args.momentum, weight_decay = args.weight_decay)
 
-    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones = [args.epochs // 4, args.epochs // 4 * 2, args.epochs // 4 * 3], gamma=0.1)
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones = [args.epochs // 3, args.epochs // 3 * 2], gamma=0.1)
+
+    scaler = torch.cuda.amp.GradScaler()
 
     for epoch in range(args.epochs):
-        train_rolling_accuracy = train_rolling_loss = 0
+        train_rolling_accuracy = train_rolling_loss = 0.
         for i, data in enumerate(trainloader, 0):
             inputs, labels = data
             inputs, labels = inputs.cuda(), labels.cuda()
             optimizer.zero_grad()
-            outputs = model(inputs)
-            loss = criterion(outputs, labels)
-            loss.backward()
-            optimizer.step()
+            with torch.cuda.amp.autocast():
+                outputs = model(inputs)
+                loss = criterion(outputs, labels)
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
             train_accuracy = compute_accuracy(outputs, labels)
             train_rolling_accuracy += train_accuracy
             train_rolling_loss += loss.item()
@@ -53,7 +57,7 @@ def train(args):
         print(f'Epoch: {epoch + 1} Avg. Loss: {train_average_loss:.2f} Avg. Accuracy: {train_average_accuracy:.2f}')
 
         with torch.no_grad():
-            val_rolling_accuracy = val_rolling_loss = 0
+            val_rolling_accuracy = val_rolling_loss = max_val_accuracy = 0.
             for i, data in enumerate(valloader, 0):
                 inputs, labels = data
                 inputs, labels = inputs.cuda(), labels.cuda()
@@ -67,21 +71,23 @@ def train(args):
             val_average_loss = val_rolling_loss / len(valloader)
             print(f'Epoch: {epoch + 1} Avg. Loss: {val_average_loss:.2f} Avg. Accuracy: {val_average_accuracy:.2f}')
 
+        scheduler.step()
+
+        if val_average_accuracy > max_val_accuracy:
+            weights_filepath = f'weights/{run.name}_best_checkpoint_{args.dataset}_{args.model}.pt'
+            torch.save(model.state_dict(), weights_filepath)
+            max_val_accuracy = val_average_accuracy
+
+        weights_filepath = f'weights/{run.name}_last_checkpoint_{args.dataset}_{args.model}.pt'
+        torch.save(model.state_dict(), weights_filepath)
+
         if args.wandb:
             wandb.log({'train_average_accuracy': train_average_accuracy,
                         'val_average_accuracy': val_average_accuracy,
                         'train_average_loss': train_average_loss,
                         'val_average_loss': val_average_loss,
+                        'max_val_accuracy': max_val_accuracy,
                     })
-
-        weights_filepath = f'weights/checkpoint_{args.dataset}_{args.model}_' + str(epoch + 1).zfill(5) + '.pt'
-        torch.save(model.state_dict(), weights_filepath)
-
-        scheduler.step()
-
-        weights_filepath = f'weights/checkpoint_{args.dataset}_{args.model}_' + str(epoch + 1).zfill(5) + '.pt'
-        torch.save(model.state_dict(), weights_filepath)
-
 
 def sweep(args):
     sweep_config = {
@@ -91,8 +97,8 @@ def sweep(args):
          'goal': 'maximize'  
        },
        'parameters': {
-           'learning_rate': {'max': 0.1, 'min': 10e-5},
-           'weight_decay': {'max': 0.1, 'min': 10e-5},
+           'learning_rate': {'max': 0.1, 'min': 1e-4},
+           'weight_decay': {'max': 0.1, 'min': 1e-4},
            'momentum': {'max': 0.1, 'min': 1},
        }
    }
@@ -108,7 +114,7 @@ if __name__ == "__main__":
     parser.add_argument("--dataset", type = str, default = 'cifar10')
     parser.add_argument("--batch", type = int, default = 128)
     parser.add_argument("--epochs", type = int, default = 74)
-    parser.add_argument("--learning_rate", type = float, default = 10e-4)
+    parser.add_argument("--learning_rate", type = float, default = 10e-3)
     parser.add_argument("--weight_decay", type = float, default = 5 * 10e-4)
     parser.add_argument("--momentum", type = str, default = 0.9)
     parser.add_argument("--wandb", action="store_true", default = False)
